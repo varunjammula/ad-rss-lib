@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List
 
-from ..physics.types import Distance, Speed, Acceleration, MetricRange, ParametricRange
+from ..physics.types import Distance, Speed, Acceleration, MetricRange, ParametricRange, Dimension3D
 
 
 class ObjectType(Enum):
@@ -99,11 +99,14 @@ class RssDynamics:
     response_time: float
 
 
+from dataclasses import field
+
 @dataclass
 class ObjectState:
     position: MetricRange
     velocity: Speed
-    # Other fields from the C++ ObjectState might be added here
+    dimension: Dimension3D
+    occupied_regions: List["OccupiedRegion"] = field(default_factory=list)
 
 
 @dataclass
