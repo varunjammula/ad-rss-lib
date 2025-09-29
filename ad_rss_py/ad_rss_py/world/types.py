@@ -35,6 +35,12 @@ class LaneDrivingDirection(Enum):
 LaneSegmentId = int
 
 
+ObjectId = int
+
+
+TimeIndex = int
+
+
 class RoadSegmentType(Enum):
     Normal = 0
     Intersection = 1

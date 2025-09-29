@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from ..physics.types import Distance
 
+from typing import List
+
 @dataclass
 class Point:
     """
@@ -8,3 +10,5 @@ class Point:
     """
     x: Distance
     y: Distance
+
+Polygon = List[Point]

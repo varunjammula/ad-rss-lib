@@ -34,16 +34,21 @@ class StructuredObjectState:
     distance_to_leave_intersection: Distance
     velocity: Speed
 
+from ..physics.types import MetricRange
+
 @dataclass
 class RelativeObjectState:
     object_type: ObjectType
     dynamics: RssDynamics
     structured_object_state: StructuredObjectState
+    position: MetricRange
     # unstructured_object_state will be added later if needed
+
+RelativeConstellationId = int
 
 @dataclass
 class RelativeConstellation:
-    constellation_id: int
+    constellation_id: RelativeConstellationId
     ego_id: int
     object_id: int
     constellation_type: ConstellationType
