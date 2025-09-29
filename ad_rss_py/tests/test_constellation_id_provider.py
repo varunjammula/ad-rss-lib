@@ -9,7 +9,7 @@ from ad_rss_py.world.types import (
     RssDynamics,
     TimeIndex,
 )
-from ad_rss_py.physics.types import MetricRange, Speed
+from ad_rss_py.physics.types import MetricRange, Speed, Dimension3D
 
 
 class TestRssConstellationIdProvider(unittest.TestCase):
@@ -22,11 +22,12 @@ class TestRssConstellationIdProvider(unittest.TestCase):
             alpha_lat_accel_max=0.2, alpha_lat_brake_min=0.8, lateral_fluctuation_margin=0.1, response_time=1.0
         )
         self.time_index = TimeIndex(1)
+        self.dimension = Dimension3D(length=4.0, width=1.8, height=1.5)
 
         # Create some mock objects
-        self.obj1 = Object(object_id=1, object_type=ObjectType.EgoVehicle, state=ObjectState(position=MetricRange(0, 4), velocity=Speed(10)))
-        self.obj2 = Object(object_id=2, object_type=ObjectType.OtherVehicle, state=ObjectState(position=MetricRange(10, 14), velocity=Speed(10)))
-        self.obj3 = Object(object_id=3, object_type=ObjectType.OtherVehicle, state=ObjectState(position=MetricRange(20, 24), velocity=Speed(10)))
+        self.obj1 = Object(object_id=1, object_type=ObjectType.EgoVehicle, state=ObjectState(position=MetricRange(0, 4), velocity=Speed(10), dimension=self.dimension))
+        self.obj2 = Object(object_id=2, object_type=ObjectType.OtherVehicle, state=ObjectState(position=MetricRange(10, 14), velocity=Speed(10), dimension=self.dimension))
+        self.obj3 = Object(object_id=3, object_type=ObjectType.OtherVehicle, state=ObjectState(position=MetricRange(20, 24), velocity=Speed(10), dimension=self.dimension))
 
     def test_provides_new_and_persistent_ids(self):
         """

@@ -4,7 +4,7 @@ from ad_rss_py.world.types import (
     WorldModel, Constellation, Object, ObjectType, ObjectState, ConstellationType,
     RssDynamics, RoadArea
 )
-from ad_rss_py.physics.types import MetricRange, Speed
+from ad_rss_py.physics.types import MetricRange, Speed, Dimension3D
 from ad_rss_py.state.types import LongitudinalResponse
 
 class TestRssCheck(unittest.TestCase):
@@ -12,6 +12,7 @@ class TestRssCheck(unittest.TestCase):
     def setUp(self):
         """Set up common objects for the tests."""
         self.rss_check = RssCheck()
+        self.dimension = Dimension3D(length=4.0, width=1.8, height=1.5)
 
         self.default_rss_dynamics = RssDynamics(
             alpha_lon_accel_max=2.0,
@@ -28,7 +29,8 @@ class TestRssCheck(unittest.TestCase):
             object_type=ObjectType.EgoVehicle,
             state=ObjectState(
                 position=MetricRange(minimum=0.0, maximum=4.0), # 4m long vehicle
-                velocity=Speed(30.0)
+                velocity=Speed(30.0),
+                dimension=self.dimension
             )
         )
 
@@ -62,7 +64,8 @@ class TestRssCheck(unittest.TestCase):
             object_type=ObjectType.OtherVehicle,
             state=ObjectState(
                 position=MetricRange(minimum=other_vehicle_pos_start, maximum=other_vehicle_pos_start + 4.0),
-                velocity=Speed(25.0)
+                velocity=Speed(25.0),
+                dimension=self.dimension
             )
         )
 
@@ -102,7 +105,8 @@ class TestRssCheck(unittest.TestCase):
             object_type=ObjectType.OtherVehicle,
             state=ObjectState(
                 position=MetricRange(minimum=other_vehicle_pos_start, maximum=other_vehicle_pos_start + 4.0),
-                velocity=Speed(30.0)
+                velocity=Speed(30.0),
+                dimension=self.dimension
             )
         )
 
