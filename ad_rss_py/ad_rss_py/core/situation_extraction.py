@@ -65,12 +65,14 @@ class RssSituationExtraction:
         ego_state = RelativeObjectState(
             object_type=world_constellation.ego_vehicle.object_type,
             dynamics=world_constellation.ego_vehicle_rss_dynamics,
-            structured_object_state=ego_struct_state
+            structured_object_state=ego_struct_state,
+            position=world_constellation.ego_vehicle.state.position
         )
         other_state = RelativeObjectState(
             object_type=world_constellation.object.object_type,
             dynamics=world_constellation.object_rss_dynamics,
-            structured_object_state=other_struct_state
+            structured_object_state=other_struct_state,
+            position=world_constellation.object.state.position
         )
 
         return RelativeConstellation(
