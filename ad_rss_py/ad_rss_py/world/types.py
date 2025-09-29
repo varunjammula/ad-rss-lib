@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List
 
-from ..physics.types import Distance, Speed, Acceleration, MetricRange
+from ..physics.types import Distance, Speed, Acceleration, MetricRange, ParametricRange
 
 
 class ObjectType(Enum):
@@ -24,6 +24,62 @@ class ConstellationType(Enum):
     IntersectionObjectHasPriority = 4
     IntersectionSamePriority = 5
     Unstructured = 6
+
+
+class LaneDrivingDirection(Enum):
+    Bidirectional = 0
+    Positive = 1
+    Negative = 2
+
+
+LaneSegmentId = int
+
+
+class RoadSegmentType(Enum):
+    Normal = 0
+    Intersection = 1
+
+
+@dataclass
+class RoadSegment:
+    """
+    Defines a road segment.
+    """
+    type: RoadSegmentType
+    lane_segments: List["LaneSegment"]
+    minimum_length_after_intersecting_area: Distance
+    minimum_length_before_intersecting_area: Distance
+
+
+@dataclass
+class LaneSegment:
+    """
+    Defines a lane segment.
+    """
+    id: LaneSegmentId
+    driving_direction: LaneDrivingDirection
+    length: MetricRange
+    width: MetricRange
+
+
+@dataclass
+class LateralRssAccelerationValues:
+    """
+    Collection of the RSS acceleration values in lateral direction.
+    """
+    accel_max: Acceleration
+    brake_min: Acceleration
+
+
+@dataclass
+class LongitudinalRssAccelerationValues:
+    """
+    Collection of the RSS acceleration values in longitudinal direction.
+    """
+    accel_max: Acceleration
+    brake_max: Acceleration
+    brake_min: Acceleration
+    brake_min_correct: Acceleration
 
 
 @dataclass
@@ -72,3 +128,13 @@ class WorldModel:
     time_index: int
     default_ego_vehicle_rss_dynamics: RssDynamics
     constellations: List[Constellation]
+
+
+@dataclass
+class OccupiedRegion:
+    """
+    Describes the region that an object covers within a lane segment.
+    """
+    segment_id: LaneSegmentId
+    lon_range: ParametricRange
+    lat_range: ParametricRange

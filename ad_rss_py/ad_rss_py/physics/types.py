@@ -11,3 +11,10 @@ Angle = float
 class MetricRange:
     minimum: Distance
     maximum: Distance
+
+ParametricValue = float
+
+@dataclass
+class ParametricRange:
+    minimum: ParametricValue
+    maximum: ParametricValue
