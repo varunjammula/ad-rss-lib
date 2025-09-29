@@ -2,8 +2,9 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import List
 
-from ..physics.types import Acceleration, Distance
+from ..physics.types import Acceleration, Distance, Angle, MetricRange
 from ..world.types import RssDynamics, ConstellationType
+from ..unstructured.types import UnstructuredTrajectorySet
 
 
 class LongitudinalResponse(Enum):
@@ -62,9 +63,9 @@ class RssState:
 
 @dataclass
 class AccelerationRestriction:
-    longitudinal_range: "MetricRange"
-    lateral_left_range: "MetricRange"
-    lateral_right_range: "MetricRange"
+    longitudinal_range: MetricRange
+    lateral_left_range: MetricRange
+    lateral_right_range: MetricRange
 
 
 @dataclass
@@ -84,3 +85,13 @@ class RssStateSnapshot:
     time_index: int
     individual_responses: List[RssState] = field(default_factory=list)
     default_ego_vehicle_rss_dynamics: RssDynamics = None
+
+
+@dataclass
+class UnstructuredConstellationStateInformation:
+    """
+    Holds additional information on the reason for the unstructured constellation response.
+    """
+    brake_trajectory_set: UnstructuredTrajectorySet
+    continue_forward_trajectory_set: UnstructuredTrajectorySet
+    considered_drive_away_steering_angle: Angle
